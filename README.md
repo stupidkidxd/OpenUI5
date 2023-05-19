@@ -1,2 +1,2 @@
-# OpenUI5_Less2
+# OpenUI5
 Homework for Lynx-IT
