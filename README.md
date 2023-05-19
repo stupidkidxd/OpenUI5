@@ -1,6 +1,2 @@
 # OpenUI5_Less2
-Homeworkkkkkkk
-
-first edit
-
-test commits
+Homework for Lynx-IT
