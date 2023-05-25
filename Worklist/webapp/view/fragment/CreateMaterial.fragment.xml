@@ -1,0 +1,59 @@
+<core:FragmentDefinition
+    xmlns:core="sap.ui.core"
+    xmlns="sap.m">
+    <Dialog
+        title="{i18n>ttlCreateMaterial}">
+        <VBox class="sapUiSmallMargin">
+            <Label
+                text="{i18n>ttlMaterialText}:"/>
+            <Input
+                value="{MaterialText}"/>
+
+            <Label
+                text="{i18n>ttlGroup}:"/>
+            <Select
+                width="100%"
+                selectedKey="{GroupID}"
+                items="{path: '/zjblessons_base_Groups',
+                    sorter: {path: 'GroupText'}}">
+                <core:Item
+                    key="{GroupID}"
+                    text="{GroupText}"/>
+            </Select>    
+
+            <Label
+                text="{i18n>ttlSubGroup}:"/>
+            <Select
+                width="100%"
+                selectedKey="{SubGroupID}"
+                items="{path: '/zjblessons_base_SubGroups',
+                    sorter: {path: 'SubGroupText'}}">
+                <core:Item
+                    key="{SubGroupID}"
+                    text="{SubGroupText}"/>
+            </Select>
+
+            <Label
+                text="{i18n>ttlMaterialDescription}"/>
+            <TextArea
+                width="100%"
+                value="{MaterialDescription}"
+                maxLength="1000"
+                height="10em"/>    
+        </VBox>
+
+        <beginButton>
+            <Button
+                text="{i18n>btnSave}"
+                type="Emphasized"
+                press="onPressSaveMaterial"/>
+        </beginButton>
+        <endButton>
+            <Button
+                text="{i18n>btnClose}"
+                press="onPressCloseCreateDialog"/>
+        </endButton>
+
+    </Dialog>
+
+</core:FragmentDefinition>

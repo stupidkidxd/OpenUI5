@@ -4,8 +4,9 @@ sap.ui.define([
 		"sap/ui/model/json/JSONModel",
 		"zjblessons/Worklist/model/formatter",
 		"sap/ui/model/Filter",
-		"sap/ui/model/FilterOperator"
-	], function (BaseController, JSONModel, formatter, Filter, FilterOperator) {
+		"sap/ui/model/FilterOperator",
+		"sap/ui/core/Fragment"
+	], function (BaseController, JSONModel, formatter, Filter, FilterOperator, Fragment) {
 		"use strict";
 
 		return BaseController.extend("zjblessons.Worklist.controller.Worklist", {
@@ -54,6 +55,50 @@ sap.ui.define([
 
 			onNavBack : function() {
 				history.go(-1);
+			},
+
+			_loadCreateFragment: function(oEntryContext){
+				if(!this.oCreateDialog){
+					this.pCreateMaterial = Fragment.load({
+						name: "zjblessons.Worklist.view.fragment.CreateMaterial",
+						controller: this,
+						id: "fCreateDialog"
+					}).then(oDialog => {
+						this.oCreateDialog = oDialog;
+						this.getView().addDependent(this.oCreateDialog);
+						return Promise.resolve(oDialog);
+					});
+				}
+				this.pCreateMaterial.then(oDialog => {
+					oDialog.setBindingContext(oEntryContext);
+					oDialog.open();
+				})
+			},
+
+			_closeCreateDialog: function(){
+				this.oCreateDialog.close();
+			},
+
+			onPressSaveMaterial: function(){
+				this.getModel().submitChanges();
+				this._closeCreateDialog();
+			},
+
+			onPressCloseCreateDialog: function(){
+				this.getModel().resetChanges();
+				this._closeCreateDialog();
+			},
+
+			onPressCreateMaterial: function() {
+				const mProperties = {
+					MaterialID: "0",
+					Version: "A",
+					Language: "RU"
+				};
+				const oEntryContext = this.getModel().createEntry("/zjblessons_base_Materials", {
+					properties: mProperties
+				});
+				this._loadCreateFragment(oEntryContext);
 			},
 
 			onSearch : function (oEvent) {

@@ -41,35 +41,40 @@
 							search="onSearch"
 							width="auto">
 						</SearchField>
+						<Button
+							press="onPressCreateMaterial"
+							icon="{i18n>iCreate}"
+							text="{i18n>btnCreate}"
+							type="Emphasized"/>
 						<Button 
-						press="onPressRefresh"
-						icon="sap-icon://refresh"
-						tooltip="{i18n>Refresh}"
+							press="onPressRefresh"
+							icon="sap-icon://refresh"
+							tooltip="{i18n>Refresh}"
 						/>
 					</Toolbar>
 				</headerToolbar>
 
 				<columns>
 					<Column>
-						<Text text="{i18n>MaterialID}"/>
+						<Text text="{i18n>ttlMaterialID}"/>
 					</Column>
 					<Column>
-						<Text text="{i18n>MaterialText}"/>
+						<Text text="{i18n>ttlMaterialText}"/>
 					</Column>
 					<Column>
-						<Text text="{i18n>MaterialDescription}"/>
+						<Text text="{i18n>ttlMaterialDescription}"/>
 					</Column>
 					<Column>
-						<Text text="{i18n>CreatedByFullName}"/>
+						<Text text="{i18n>ttlCreatedByFullName}"/>
 					</Column>
 					<Column>
-						<Text text="{i18n>Created}"/>
+						<Text text="{i18n>ttlCreated}"/>
 					</Column>
 					<Column>
-						<Text text="{i18n>ModifiedByFullName}"/>
+						<Text text="{i18n>ttlModifiedByFullName}"/>
 					</Column>
 					<Column>
-						<Text text="{i18n>Modified}"/>
+						<Text text="{i18n>ttlModified}"/>
 					</Column>
 					<Column width="5%"></Column>
 				</columns>
@@ -99,9 +104,9 @@
 								}
 							}"/>
 							<Button 
-								press="onPressDeleteModel"
-								icon="sap-icon://delete"
-								tooltip="{i18n>Delete}"
+								press="onPressDeleteMaterial"
+								icon="{i18n>iDelete}"
+								tooltip="{i18n>btnDelete}"
 								type="Transparent"
 							/>
 						</cells>
