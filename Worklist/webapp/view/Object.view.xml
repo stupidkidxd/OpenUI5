@@ -19,7 +19,7 @@
 			<semantic:EditAction
 				press="onPressEditMaterial"/>
 		</semantic:editAction>
-		
+
 		<semantic:saveAsTileAction>
 			<Button
 				press="onPressSaveMaterial"
@@ -30,18 +30,15 @@
 		
 		<semantic:content>
 			<VBox>
-				<VBox
-					visible="{= !${objectView>/editMode} }">
-					<Text
-						text="{MaterialDescription}"/>
+				<VBox visible="{= !${objectView>/editMode}}">
+					<Text text="{MaterialDescription}"/>
 				</VBox>
-				<VBox
-					visible="{objectView>/editMode}">
-					<TextArea
-						value="{MaterialDescription}"/>
+				<VBox visible="{objectView>/editMode}">
+					<TextArea value="{MaterialDescription}"/>
 				</VBox>
 			</VBox>
 		</semantic:content>
+		
 	</semantic:SemanticPage>
 
 </mvc:View>

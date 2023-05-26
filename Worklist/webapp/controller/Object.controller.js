@@ -15,11 +15,12 @@ sap.ui.define([
 		return BaseController.extend("zjblessons.Worklist.controller.Object", {
 
 			formatter: formatter,
-			
+
 			onInit : function () {
+				
 				this.getRouter().getRoute("object").attachPatternMatched(this._onObjectMatched, this);
 				
-				var oginalBusyDelay,
+				var iOriginalBusyDelay,
 					oViewModel = new JSONModel({
 						busy : true,
 						delay : 0,
@@ -27,7 +28,9 @@ sap.ui.define([
 					});
 				this.setModel(oViewModel, "objectView");
 				
+
 				iOriginalBusyDelay = this.getView().getBusyIndicatorDelay();
+				
 				this.getOwnerComponent().getModel().metadataLoaded().then(function () {
 						oViewModel.setProperty("/delay", iOriginalBusyDelay);
 					}
@@ -48,12 +51,12 @@ sap.ui.define([
 				const sObjectId =  oEvent.getParameter("arguments").objectId;
 				this.getModel().metadataLoaded().then( function() {
 					const sObjectPath = this.getModel().createKey("/zjblessons_base_Materials", {
-						MaterialID:  sObjectId
+						MaterialID :  sObjectId
 					});
 					this._bindView(sObjectPath);
 				}.bind(this));
 			},
-			
+
 			_bindView : function (sObjectPath) {
 				const oViewModel = this.getModel("objectView"),
 					oDataModel = this.getModel();
@@ -79,7 +82,6 @@ sap.ui.define([
 					oViewModel = this.getModel("objectView"),
 					oElementBinding = oView.getElementBinding();
 
-				// No data for the binding
 				if (!oElementBinding.getBoundContext()) {
 					this.getRouter().getTargets().display("objectNotFound");
 					return;
@@ -93,14 +95,13 @@ sap.ui.define([
 				oViewModel.setProperty("/busy", false);
 			},
 			
-			onPressEditMaterial: function() {
+			onPressEditMaterial: function(){
 				this.getModel("objectView").setProperty("/editMode", true);
 			},
 			
-			onPressSaveMaterial: function() {
+			onPressSaveMaterial: function(){
 				this.getModel("objectView").setProperty("/editMode", false);
-			},
-
+			}
 		});
 
 	}

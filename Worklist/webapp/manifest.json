@@ -92,12 +92,16 @@
 				{
 					"pattern": "",
 					"name": "worklist",
-					"target": ["worklist"]
+					"target": [
+						"worklist"
+					]
 				},
 				{
-					"pattern": "MaterialID/{objectId}",
+					"pattern": "Material/{objectId}",
 					"name": "object",
-					"target": ["object"]
+					"target": [
+						"object"
+					]
 				}
 			],
 			"targets": {
