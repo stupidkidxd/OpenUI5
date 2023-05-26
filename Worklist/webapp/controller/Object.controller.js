@@ -100,10 +100,23 @@ sap.ui.define([
 				this._setEditMode(true);
 			},
 			
-			onPressSaveMaterial: function(){
-				this.getModel().submitChanges();
+			onPressSaveMaterial: function() {
+				var oButton = this.getView().byId("saveButton");
+				oButton.setBusy(true);
+			  
+				this.getModel().submitChanges({
+				  success: function() {
+					oButton.setBusy(false);
+					sap.m.MessageToast.show("Запись успешно сохранена");
+				  },
+				  error: function() {
+					oButton.setBusy(false);
+					sap.m.MessageToast.show("Ошибка сохранения записи");
+				  }
+				});
+			  
 				this._setEditMode(false);
-			},
+			  },
 
 			onPressCancelMaterial: function(){
 				this.getModel().resetChanges();

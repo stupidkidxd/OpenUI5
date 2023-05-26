@@ -188,7 +188,7 @@
 		</semantic:content>
 		
 		<semantic:titleCustomTextActions>
-			<Button visible="{objectView>/editMode}" icon="{i18n>iSave}" text="{i18n>btnSave}" press="onPressSaveMaterial"/>
+			<Button visible="{objectView>/editMode}" id="saveButton" icon="{i18n>iSave}" text="{i18n>btnSave}" press="onPressSaveMaterial"/>
 			<Button visible="{objectView>/editMode}" text="{i18n>btnCancel}" press="onPressCancelMaterial"/>
 			<Button visible="{= !${objectView>/editMode}}" text="{i18n>btnEdit}" press="onPressEditMaterial"/>
 		</semantic:titleCustomTextActions>
