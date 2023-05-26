@@ -82,7 +82,7 @@
 				<items>
 					<ColumnListItem
 						type="Navigation"
-						press="onPress">
+						press="onPressShowMaterial">
 						<cells>
 							<ObjectIdentifier title="{MaterialID}"/>
 							<ObjectIdentifier title="{MaterialText}"/>

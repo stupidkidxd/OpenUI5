@@ -14,17 +14,34 @@
 		<semantic:titleHeading>
 			<Title text="{MaterialText}" />
 		</semantic:titleHeading>
-
-		<semantic:headerContent>
-			<ObjectNumber
-			/>
-		</semantic:headerContent>
-
-		<semantic:sendEmailAction>
-			<semantic:SendEmailAction id="shareEmail" press="onShareEmailPress"/>
-		</semantic:sendEmailAction>
-
-
+		
+		<semantic:editAction>
+			<semantic:EditAction
+				press="onPressEditMaterial"/>
+		</semantic:editAction>
+		
+		<semantic:saveAsTileAction>
+			<Button
+				press="onPressSaveMaterial"
+				icon="{i18n>iSave}"
+				text="{i18n>btnSave}"
+				type="Emphasized"/>
+		</semantic:saveAsTileAction>
+		
+		<semantic:content>
+			<VBox>
+				<VBox
+					visible="{= !${objectView>/editMode} }">
+					<Text
+						text="{MaterialDescription}"/>
+				</VBox>
+				<VBox
+					visible="{objectView>/editMode}">
+					<TextArea
+						value="{MaterialDescription}"/>
+				</VBox>
+			</VBox>
+		</semantic:content>
 	</semantic:SemanticPage>
 
 </mvc:View>

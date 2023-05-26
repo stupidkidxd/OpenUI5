@@ -49,7 +49,13 @@ sap.ui.define([
 				this.getModel("worklistView").setProperty("/worklistTableTitle", sTitle);
 			},
 
-			onPress : function (oEvent) {
+			_showObject : function (oItem) {
+				this.getRouter().navTo("object", {
+					objectId: oItem.getBindingContext().getProperty("MaterialID")
+				});
+			},
+
+			onPressShowMaterial : function (oEvent) {
 				this._showObject(oEvent.getSource());
 			},
 
@@ -130,12 +136,6 @@ sap.ui.define([
 			onPressRefresh: function () {
 				var oTable = this.byId("table");
 				oTable.getBinding("items").refresh();
-			},
-
-			_showObject : function (oItem) {
-				this.getRouter().navTo("object", {
-					objectId: oItem.getBindingContext().getProperty("MaterialID")
-				});
 			},
 
 			_applySearch: function(aTableSearchState) {

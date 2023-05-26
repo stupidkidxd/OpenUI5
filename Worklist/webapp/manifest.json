@@ -92,16 +92,12 @@
 				{
 					"pattern": "",
 					"name": "worklist",
-					"target": [
-						"worklist"
-					]
+					"target": ["worklist"]
 				},
 				{
-					"pattern": "zjblessons_base_Materials/{objectId}",
+					"pattern": "MaterialID/{objectId}",
 					"name": "object",
-					"target": [
-						"object"
-					]
+					"target": ["object"]
 				}
 			],
 			"targets": {
