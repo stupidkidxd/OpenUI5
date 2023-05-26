@@ -108,24 +108,33 @@ sap.ui.define([
 			},
 
 			onSearch : function (oEvent) {
-				if (oEvent.getParameters().refreshButtonPressed) {
-					this.onRefresh();
-				} else {
-					var aTableSearchState = [];
-					var sQuery = oEvent.getParameter("query");
-					if (sQuery && sQuery.length > 0) {
-						aTableSearchState = [
-							new Filter({
-								filters: [
-									new Filter("MaterialText", FilterOperator.EQ, sQuery),
-									new Filter("CreatedByFullName", FilterOperator.Contains, sQuery)
-									]
-							})
-							];
-					}
-					this._applySearch(aTableSearchState);
-				}
+				const aFilters = [];
+				const sValue = oEvent.getParameter("query") || oEvent.getParameter("newValue");
 
+				if (sValue){
+					aFilters.push(
+						new Filter({
+							filters: [
+								new Filter("MaterialText", FilterOperator.Contains, sValue),
+								new Filter({
+									path: "MaterialDescription", 
+									operator: FilterOperator.Contains, 
+									value1: sValue,
+								}),
+							
+						new Filter({
+							filters: [
+								new Filter('CreatedByFullName', FilterOperator.Contains, sValue),
+								new Filter('ModifiedByFullName', FilterOperator.Contains, sValue),
+							],
+							and: true,
+							})
+						],
+						and:false,
+						})
+					);
+				}
+				this.byId("table").getBinding("items").filter(aFilters);
 			},
 			
 			onPressDeleteMaterial: function(oEvent) {
