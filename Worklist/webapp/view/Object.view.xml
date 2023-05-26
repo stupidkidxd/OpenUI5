@@ -2,20 +2,22 @@
 	controllerName="zjblessons.Worklist.controller.Object"
 	xmlns="sap.m"
 	xmlns:mvc="sap.ui.core.mvc"
-	xmlns:semantic="sap.f.semantic">
+	xmlns:semantic="sap.f.semantic"
+	xmlns:core="sap.ui.core">
 
 	<semantic:SemanticPage
 		id="page"
 		headerPinnable="false"
 		toggleHeaderOnTitleClick="false"
 		busy="{objectView>/busy}"
-		busyIndicatorDelay="{objectView>/delay}">
+		busyIndicatorDelay="{objectView>/delay}"
+		class="sapUiNoContentPadding">
 
 		<semantic:titleHeading>
 			<Title text="{MaterialText}" />
 		</semantic:titleHeading>
 		
-		<semantic:editAction>
+		<!--<semantic:editAction>
 			<semantic:EditAction
 				press="onPressEditMaterial"/>
 		</semantic:editAction>
@@ -26,19 +28,171 @@
 				icon="{i18n>iSave}"
 				text="{i18n>btnSave}"
 				type="Emphasized"/>
-		</semantic:saveAsTileAction>
+		</semantic:saveAsTileAction>-->
 		
 		<semantic:content>
-			<VBox>
-				<VBox visible="{= !${objectView>/editMode}}">
-					<Text text="{MaterialDescription}"/>
-				</VBox>
-				<VBox visible="{objectView>/editMode}">
-					<TextArea value="{MaterialDescription}"/>
-				</VBox>
-			</VBox>
+			<IconTabBar headerMode="Inline">
+
+					<items>
+						<IconTabFilter
+							text="{i18n>ttlObjectList}"
+							key="list"
+							icon="{i18n>iObjectList}">
+							<List headerText="{= ${objectView>/editMode} ? ${i18n>titleObjectNameEdit} + ' ' + ${MaterialText} : ${i18n>titleObjectNameView} + ' ' + ${MaterialText}}">
+
+								<InputListItem
+								label="{i18n>labelEnableChanging}">
+								<Switch state="{objectView>/editMode}"></Switch>
+								</InputListItem>
+
+								<InputListItem label="{i18n>lTableNameColumnTitle}" visible="{= !${objectView>/editMode}}">
+									<Text text="{MaterialText}" visible="{= !${objectView>/editMode}}"/>
+								</InputListItem>
+
+								<InputListItem label="{i18n>lMaterialDescription}" visible="{= !${objectView>/editMode}}">
+									<Text text="{MaterialDescription}" visible="{= !${objectView>/editMode}}"/>
+								</InputListItem>
+
+								<InputListItem label="{i18n>lGroupText}" visible="{= !${objectView>/editMode}}">
+									<Text text="{GroupText}" visible="{= !${objectView>/editMode}}"/>
+								</InputListItem>
+
+								<InputListItem label="{i18n>lSubGroupText}" visible="{= !${objectView>/editMode}}">
+									<Text text="{SubGroupText}" visible="{= !${objectView>/editMode}}"/>
+								</InputListItem>
+
+								<InputListItem label="{i18n>lTableCreated}" visible="{= !${objectView>/editMode}}">
+									<Text text="{path: 'Created', type: 'sap.ui.model.type.DateTime', formatOptions: {style:'short'}}" visible="{= !${objectView>/editMode}}"/>
+								</InputListItem>
+
+								<InputListItem label="{i18n>lTableModifiedUTC}" visible="{= !${objectView>/editMode}}">
+									<Text text="{path: 'Modified', type: 'sap.ui.model.type.DateTime', formatOptions: {style:'medium'}, UTC: true}"/>
+								</InputListItem>
+
+								<InputListItem label="{i18n>lTableModified}" visible="{= !${objectView>/editMode}}">
+									<Text text="{path: 'Modified', type: 'sap.ui.model.type.DateTime', formatOptions: {style:'medium'}}"/>
+								</InputListItem>
+
+								<InputListItem label="{i18n>lTableModifiedByFullName}" visible="{= !${objectView>/editMode}}">
+									<Text 
+									id="modifiedBy"
+									text="{
+										parts: ['Modified', 'ModifiedByFullName'],
+										formatter: '.formatter.creationInfo'
+									}"/>
+								</InputListItem>
+
+								<InputListItem label="{i18n>lTableNameColumnTitle}" visible="{objectView>/editMode}">
+									<Input value="{MaterialText}" 
+									maxLength="128" 
+									enabled="{= ${objectView>editMode} &amp;&amp; ${MaterialText} === ' ' || undefined || null}"
+									width="20em"/>
+								</InputListItem>
+
+								<InputListItem label="{i18n>lMaterialDescription}" visible="{objectView>/editMode}">
+									<Input value="{MaterialDescription}" 
+									maxLength="256" 
+									enabled="{= ${objectView>editMode} &amp;&amp; ${MaterialDescription} === ' ' || undefined || null}"
+									width="20em"/>
+								</InputListItem>
+
+								<InputListItem
+									label="{i18n>lGroupText}"
+									visible="{objectView>/editMode}">
+
+									<Select
+										forceSelection="false"
+										width="20em"
+										selectedKey="{GroupID}"
+										items="{
+											path: '/zjblessons_base_Groups',
+											sorter:{
+												path: 'GroupText',
+												descending: true
+											},
+											filters: [{
+												path: 'GroupText',
+												operator: 'NE',
+												value1: null
+											}]
+										}">
+
+										<core:Item 
+											key="{GroupID}"
+											text="{GroupText}"/>
+
+									</Select>
+
+								</InputListItem>
+
+								<InputListItem
+									label="{i18n>lSubGroupText}"
+									visible="{objectView>/editMode}">
+
+									<Select
+										forceSelection="false"
+										width="20em"
+										selectedKey="{SubGroupID}"
+										items="{
+											path: '/zjblessons_base_SubGroups',
+											sorter:{
+												path: 'SubGroupText',
+												descending: true
+											},
+											filters: [{
+												path: 'SubGroupText',
+												operator: 'NE',
+												value1: null
+											}]
+										}">
+
+										<core:Item 
+											key="{SubGroupID}"
+											text="{SubGroupText}"/>
+
+									</Select>
+
+								</InputListItem>
+
+								<InputListItem label="{i18n>lTableCreated}" visible="{objectView>/editMode}">
+									<Text text="{path: 'Created', type: 'sap.ui.model.type.DateTime', formatOptions: {style:'short'}}" visible="{objectView>/editMode}"/>
+								</InputListItem>
+
+								<InputListItem label="{i18n>lTableModifiedUTC}" visible="{objectView>/editMode}">
+									<Text text="{path: 'Modified', type: 'sap.ui.model.type.DateTime', formatOptions: {style:'medium'}, UTC: true}"/>
+								</InputListItem>
+
+								<InputListItem label="{i18n>lTableModified}" visible="{objectView>/editMode}">
+									<Text text="{path: 'Modified', type: 'sap.ui.model.type.DateTime', formatOptions: {style:'medium'}}"/>
+								</InputListItem>
+
+								<InputListItem label="{i18n>lTableModifiedByFullName}" visible="{objectView>/editMode}">
+									<Text 
+									text="{
+										parts: ['Modified', 'ModifiedByFullName'],
+										formatter: '.formatter.creationInfo'
+									}"/>
+								</InputListItem>
+
+							</List>
+						</IconTabFilter>
+						<IconTabFilter
+							text="{i18n>ttlObjectForm}"
+							key="form"
+							icon="{i18n>iObjectForm}">
+							<Text text="Info content goes here..."/>
+						</IconTabFilter>
+					</items>
+
+			</IconTabBar>
 		</semantic:content>
 		
+		<semantic:titleCustomTextActions>
+			<Button visible="{objectView>/editMode}" icon="{i18n>iSave}" text="{i18n>btnSave}" press="onPressSaveMaterial"/>
+			<Button visible="{objectView>/editMode}" text="{i18n>btnCancel}" press="onPressCancelMaterial"/>
+			<Button visible="{= !${objectView>/editMode}}" text="{i18n>btnEdit}" press="onPressEditMaterial"/>
+		</semantic:titleCustomTextActions>
+
 	</semantic:SemanticPage>
 
 </mvc:View>

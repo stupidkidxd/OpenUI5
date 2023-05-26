@@ -97,10 +97,21 @@ sap.ui.define([
 			
 			onPressEditMaterial: function(){
 				this.getModel("objectView").setProperty("/editMode", true);
+				this._setEditMode(true);
 			},
 			
 			onPressSaveMaterial: function(){
-				this.getModel("objectView").setProperty("/editMode", false);
+				this.getModel().submitChanges();
+				this._setEditMode(false);
+			},
+
+			onPressCancelMaterial: function(){
+				this.getModel().resetChanges();
+				this._setEditMode(false);
+			},
+
+			_setEditMode: function(bMode){
+				this.getModel("objectView").setProperty("/editMode", bMode);
 			}
 		});
 
