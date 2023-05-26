@@ -136,12 +136,7 @@ sap.ui.define([
 				}
 				this.byId("table").getBinding("items").filter(aFilters);
 			},
-			
-			onPressDeleteMaterial: function(oEvent) {
-				var sEntryPath = oEvent.getSource().getBindingContext().getPath();
-				this.getModel().remove(sEntryPath);
-			},
-
+		
 			onPressRefresh: function () {
 				var oTable = this.byId("table");
 				oTable.getBinding("items").refresh();
@@ -154,7 +149,27 @@ sap.ui.define([
 				if (aTableSearchState.length !== 0) {
 					oViewModel.setProperty("/tableNoDataText", this.getResourceBundle().getText("worklistNoDataWithSearchText"));
 				}
-			}
+			},
+
+			onPressDeleteMaterial: function (oEvent) {
+				const oSelectedItem = oEvent.getSource();
+				const oBindingContext = oSelectedItem.getBindingContext();
+				const sPath = oBindingContext.getPath();
+			  
+				sap.m.MessageBox.show("Вы действительно желаете удалить запись?", {
+				  icon: sap.m.MessageBox.Icon.WARNING,
+				  title: "Подтверждение удаления",
+				  actions: [sap.m.MessageBox.Action.OK, sap.m.MessageBox.Action.CANCEL],
+				  onClose: function (oAction) {
+					if (oAction === sap.m.MessageBox.Action.OK) {
+					  oBindingContext.getModel().remove(sPath);
+					  sap.m.MessageToast.show("Запись успешно удалена");
+					} else {
+					  sap.m.MessageToast.show("Удаление отменено");
+					}
+				  }
+				});
+			  }
 
 		});
 	}
