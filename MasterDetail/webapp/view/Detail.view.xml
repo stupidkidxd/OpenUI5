@@ -1,0 +1,138 @@
+<mvc:View
+	controllerName="zjblessons.MasterDetail.controller.Detail"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:table="sap.ui.table"
+	xmlns:semantic="sap.f.semantic">
+
+	<semantic:SemanticPage id="page" class="sapUiNoContentPadding" busyIndicatorDelay="{detailView>/delay}">
+
+		<semantic:titleHeading>
+			<Title id="thDetail" level="H2" text="No selected"/>
+		</semantic:titleHeading>
+		
+		<semantic:content>
+			
+			<VBox id="contentVBox">
+				<HBox>
+					<Title level="H2" text="{detailView>/count}" visible="{= (${detailView>/masterItem}) !== 'All'}"/>
+				</HBox>
+		
+			
+			<VBox>
+				<table:Table id="Groups" visible="{= (${detailView>/masterItem}) === 'Groups'}">
+					<table:columns>
+						
+						<table:Column width="11rem">
+							<Label text="GroupID"/>
+							<table:template>
+								<Text text="{GroupID}"/>
+							</table:template>
+						</table:Column>
+						
+						<table:Column width="11rem">
+							<Label text="GroupText"/>
+							<table:template>
+								<Text text="{GroupText}"/>
+							</table:template>
+						</table:Column>
+						
+						<table:Column width="11rem">
+							<Label text="GroupDescription"/>
+							<table:template>
+								<Text text="{GroupDescription}"/>
+							</table:template>
+						</table:Column>
+						
+					</table:columns>
+				</table:Table>
+				
+				<table:Table id="SubGroups" visible="{= (${detailView>/masterItem}) === 'SubGroups'}">
+					<table:columns>
+						
+						<table:Column width="11rem">
+							<Label text="SubGroupID"/>
+							<table:template>
+								<Text text="{SubGroupID}"/>
+							</table:template>
+						</table:Column>
+						
+						<table:Column width="11rem">
+							<Label text="SubGroupText"/>
+							<table:template>
+								<Text text="{SubGroupText}"/>
+							</table:template>
+						</table:Column>
+						
+						<table:Column width="11rem">
+							<Label text="IntegrationID"/>
+							<table:template>
+								<Text text="{IntegrationID}"/>
+							</table:template>
+						</table:Column>
+						
+					</table:columns>
+				</table:Table>
+				
+				<table:Table id="Plants" visible="{= (${detailView>/masterItem}) === 'Plants'}">
+					<table:columns>
+						
+						<table:Column width="11rem">
+							<Label text="PlantID"/>
+							<table:template>
+								<Text text="{PlantID}"/>
+							</table:template>
+						</table:Column>
+						
+						<table:Column width="11rem">
+							<Label text="PlantText"/>
+							<table:template>
+								<Text text="{PlantText}"/>
+							</table:template>
+						</table:Column>
+						
+						<table:Column width="11rem">
+							<Label text="RegionID"/>
+							<table:template>
+								<Text text="{RegionID}"/>
+							</table:template>
+						</table:Column>
+						
+					</table:columns>
+				</table:Table>
+				
+				<table:Table id="Regions" visible="{= (${detailView>/masterItem}) === 'Regions'}">
+					<table:columns>
+						
+						<table:Column width="11rem">
+							<Label text="RegionID"/>
+							<table:template>
+								<Text text="{RegionID}"/>
+							</table:template>
+						</table:Column>
+						
+						<table:Column width="11rem">
+							<Label text="RegionText"/>
+							<table:template>
+								<Text text="{RegionText}"/>
+							</table:template>
+						</table:Column>
+						
+						<table:Column width="11rem">
+							<Label text="CreatedByFullName"/>
+							<table:template>
+								<Text text="{CreatedByFullName}"/>
+							</table:template>
+						</table:Column>
+						
+					</table:columns>
+				</table:Table>
+				
+			</VBox>
+		</VBox>
+		
+		</semantic:content>
+
+	</semantic:SemanticPage>
+
+</mvc:View>

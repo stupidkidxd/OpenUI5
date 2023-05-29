@@ -1,0 +1,58 @@
+<mvc:View
+	controllerName="zjblessons.MasterDetail.controller.Master"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:core="sap.ui.core"
+	xmlns="sap.m"
+	xmlns:semantic="sap.m.semantic">
+
+	<semantic:MasterPage
+		id="page"
+		title="{masterView>/title}">
+		
+		<semantic:content>
+			
+			<List id="list" width="auto" class="sapUiSizeCompact" busyIndicatorDelay="{masterView/delay}" noDataText="{masterView>/noDataText}"
+			mode="SingleSelectMaster" growing="true" growingScrollToLoad="true" growingThreshold="25"
+			selectionChange=".onSelectionChange">
+				
+				<items>
+					
+					<StandardListItem title="{i18n>tAll}">
+						<customData>
+							<core:CustomData key="All"/>
+						</customData>
+					</StandardListItem>
+					
+					<StandardListItem title="{i18n>tGroups}">
+						<customData>
+							<core:CustomData key="Groups"/>
+						</customData>
+					</StandardListItem>
+					
+					<StandardListItem title="{i18n>tSubGroups}">
+						<customData>
+							<core:CustomData key="SubGroups"/>
+						</customData>
+					</StandardListItem>
+					
+					<StandardListItem title="{i18n>tPlants}">
+						<customData>
+							<core:CustomData key="Plants"/>
+						</customData>
+					</StandardListItem>
+					
+					<StandardListItem title="{i18n>tRegions}">
+						<customData>
+							<core:CustomData key="Regions"/>
+						</customData>
+					</StandardListItem>
+					
+				</items>
+				
+			</List>
+			
+		</semantic:content>
+
+	</semantic:MasterPage>
+
+</mvc:View>
