@@ -125,6 +125,22 @@ sap.ui.define([
 
 			_setEditMode: function(bMode){
 				this.getModel("objectView").setProperty("/editMode", bMode);
+
+				if(bMode) {
+					this._bindGroupSelect();
+				}
+			},
+
+			_bindGroupSelect: function(){
+				this.byId("groupSelect").bindItems({
+					path: "/zjblessons_base_Groups",
+					template: new sap.ui.core.Item({
+						key: "{GroupID}",
+						text: "{GroupText}",
+					}),
+					sorter: new sap.ui.model.Sorter("GroupText", true),
+					filters: new sap.ui.model.Filter("GroupText", sap.ui.model.FilterOperator.NE, null),
+				});
 			}
 		});
 

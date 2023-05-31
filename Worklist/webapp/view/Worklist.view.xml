@@ -56,9 +56,6 @@
 
 				<columns>
 					<Column>
-						<Text text="{i18n>ttlMaterialID}"/>
-					</Column>
-					<Column>
 						<Text text="{i18n>ttlMaterialText}"/>
 					</Column>
 					<Column>
@@ -84,7 +81,6 @@
 						type="Navigation"
 						press="onPressShowMaterial">
 						<cells>
-							<ObjectIdentifier title="{MaterialID}"/>
 							<ObjectIdentifier title="{MaterialText}"/>
 							<ObjectIdentifier title="{MaterialDescription}"/>
 							<ObjectIdentifier title="{CreatedByFullName}"/>
