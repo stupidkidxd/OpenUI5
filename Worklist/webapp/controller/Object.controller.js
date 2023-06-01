@@ -158,7 +158,7 @@ sap.ui.define([
 
 			_bindSubGroupSelect:function(){
 				this._getSubGroupSelectTemplate().then((oTemplate) => {
-					this.byId("subGroupText").bindAggregation("items", {
+					this.byId("subGroupSelect").bindAggregation("items", {
 						path: "/zjblessons_base_SubGroups",
 						template: oTemplate,
 						sorter: [
@@ -167,12 +167,34 @@ sap.ui.define([
 						],
 						filters: [
 							new Filter("SubGroupText", FilterOperator.NE, null), 
-							new Filter({path:"Created", operator: FilterOperator.BT, value1: new Date("2023-03-11"), value2: new Date()}),
+							new Filter({path:"Created", operator: FilterOperator.BT, value1: new Date("2023-03-11"), value2: new Date(),
+						}),
 						],
+						events: {
+							dataRequested: () => {
+								MessageToast.show("Requesting SubGroups ...");
+							},
+							dataReceived: (oData) => {
+								MessageBox.show(this._getMessageSubGroupsLoaded(oData), {
+									title: this.getResourceBundle().getText("lSubGroupText"),
+								});
+							},
+						},
 					});
+				}).catch(() => {
+					this._setEditMode(false);
 				});
 			},
 
+			_getMessageSubGroupsLoaded: function(oData) {
+				let sSubGroupText = "";
+				oData.mParameters.data.results.forEach((oSubGroup) => {
+					sSubGroupText += oSubGroup.SubGroupText + ", "
+				})
+
+				return `${this.getResourceBundle().getText("msgGotSubGroups")} ${sSubGroupText.slice(0, sSubGroupText.length - 2)}`;
+			},
+			
 			_getSubGroupSelectTemplate: function() {
 				return new Promise((resolve, reject) => {
 					if (!this._pSubGroupSelectTemplate){
@@ -184,6 +206,9 @@ sap.ui.define([
 					}
 					this._pSubGroupSelectTemplate.then((oTemplate) => {
 						resolve(oTemplate);
+					}).catch((oError) => {
+						MessageBox.error(oError.toString());
+						reject();
 					});
 				});
 			},
