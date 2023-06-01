@@ -132,11 +132,13 @@
 									visible="{objectView>/editMode}">
 
 									<Select
+										id="subGroupSelect"
 										forceSelection="false"
 										width="20em"
 										selectedKey="{SubGroupID}"
+										/>
 										
-										items="{
+										<!-- items="{
 											path: '/zjblessons_base_SubGroups',
 											sorter:{
 												path: 'SubGroupText',
@@ -147,13 +149,13 @@
 												operator: 'NE',
 												value1: null
 											}]
-										}">
+										}"
 
 										<core:Item 
 											key="{SubGroupID}"
 											text="{SubGroupText}"/>
 
-									</Select>
+									</Select> -->
 
 								</InputListItem>
 

@@ -1,0 +1,9 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+
+    <core:Item 
+	    key="{SubGroupID}"
+	    text="{SubGroupText}"/>
+        
+</core:FragmentDefinition>

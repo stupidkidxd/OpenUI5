@@ -3,12 +3,24 @@ sap.ui.define([
 		"zjblessons/Worklist/controller/BaseController",
 		"sap/ui/model/json/JSONModel",
 		"sap/ui/core/routing/History",
-		"zjblessons/Worklist/model/formatter"
+		"zjblessons/Worklist/model/formatter",
+		"sap/ui/model/Sorter",
+		"sap/ui/model/Filter",
+		"sap/ui/model/FilterOperator",
+		"sap/m/MessageBox",
+		"sap/m/MessageToast",
+		"sap/ui/core/Fragment"
 	], function (
 		BaseController,
 		JSONModel,
 		History,
-		formatter
+		formatter,
+		Sorter,
+		Filter,
+		FilterOperator,
+		MessageBox,
+		MessageToast,
+		Fragment
 	) {
 		"use strict";
 
@@ -128,6 +140,7 @@ sap.ui.define([
 
 				if(bMode) {
 					this._bindGroupSelect();
+					this._bindSubGroupSelect();
 				}
 			},
 
@@ -141,7 +154,39 @@ sap.ui.define([
 					sorter: new sap.ui.model.Sorter("GroupText", true),
 					filters: new sap.ui.model.Filter("GroupText", sap.ui.model.FilterOperator.NE, null),
 				});
-			}
+			},
+
+			_bindSubGroupSelect:function(){
+				this._getSubGroupSelectTemplate().then((oTemplate) => {
+					this.byId("subGroupText").bindAggregation("items", {
+						path: "/zjblessons_base_SubGroups",
+						template: oTemplate,
+						sorter: [
+							new Sorter("SubGroupText", true), 
+							new Sorter({path: "Created", descending: true}),
+						],
+						filters: [
+							new Filter("SubGroupText", FilterOperator.NE, null), 
+							new Filter({path:"Created", operator: FilterOperator.BT, value1: new Date("2023-03-11"), value2: new Date()}),
+						],
+					});
+				});
+			},
+
+			_getSubGroupSelectTemplate: function() {
+				return new Promise((resolve, reject) => {
+					if (!this._pSubGroupSelectTemplate){
+						this._pSubGroupSelectTemplate = Fragment.load({
+							id: this.getView().getId(),
+							name: "zjblessons.Worklist.view.fragment.SubGroupSelectTemplate",
+							controller: this,
+						}).then((oTemplate) => oTemplate);
+					}
+					this._pSubGroupSelectTemplate.then((oTemplate) => {
+						resolve(oTemplate);
+					});
+				});
+			},
 		});
 
 	}
