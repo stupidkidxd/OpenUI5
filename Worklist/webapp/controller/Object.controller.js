@@ -36,7 +36,8 @@ sap.ui.define([
 				oViewModel = new JSONModel({
 					busy : true,
 					delay : 0,
-					editMode: false
+					editMode: false,
+					selectedKeyITB: "list"
 				});
 			this.setModel(oViewModel, "objectView");
 			
@@ -137,10 +138,14 @@ sap.ui.define([
 
 		_setEditMode: function(bMode){
 			this.getModel("objectView").setProperty("/editMode", bMode);
+			const sSelectedKey = this.getModel("objectView").getProperty("/selectedKeyITB");
 
-			if(bMode) {
+			if(bMode && sSelectedKey === "list") {
 				this._bindGroupSelect();
 				this._bindSubGroupSelect();
+			}
+			else if(sSelectedKey === "form") {
+				this._addFormContent(bMode ? "Edit" : "View")
 			}
 		},
 
@@ -215,6 +220,8 @@ sap.ui.define([
 
 		onSelectIconTabBar: function(oEvent) {
 			const sSelectedKey = oEvent.getSource().getSelectedKey();
+			this.getModel("objectView").setProperty("/selectedKeyITB", sSelectedKey);
+
 			if (sSelectedKey !== "form") return;
 			this._addFormContent("View");
 		},

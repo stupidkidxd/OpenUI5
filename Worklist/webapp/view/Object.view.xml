@@ -37,7 +37,8 @@
 						<IconTabFilter
 							text="{i18n>ttlObjectList}"
 							key="list"
-							icon="{i18n>iObjectList}">
+							icon="{i18n>iObjectList}"
+							enabled="{= !${objectView>/editMode} || ${objectView>/selectedKeyITB} === 'list'}">
 							<List headerText="{= ${objectView>/editMode} ? ${i18n>titleObjectNameEdit} + ' ' + ${MaterialText} : ${i18n>titleObjectNameView} + ' ' + ${MaterialText}}">
 
 								<InputListItem
@@ -185,7 +186,8 @@
 							id="formIconTabFilter"
 							text="{i18n>ttlObjectForm}"
 							key="form"
-							icon="{i18n>iObjectForm}">
+							icon="{i18n>iObjectForm}"
+							enabled="{= !${objectView>/editMode} || ${objectView>/selectedKeyITB} === 'form'}">
 							<Text text="Info content goes here..."/>
 						</IconTabFilter>
 					</items>
