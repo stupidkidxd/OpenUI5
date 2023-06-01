@@ -31,7 +31,7 @@
 		</semantic:saveAsTileAction>-->
 		
 		<semantic:content>
-			<IconTabBar headerMode="Inline">
+			<IconTabBar id="iconTabBar" headerMode="Inline" select="onSelectIconTabBar">
 
 					<items>
 						<IconTabFilter
@@ -182,6 +182,7 @@
 							</List>
 						</IconTabFilter>
 						<IconTabFilter
+							id="formIconTabFilter"
 							text="{i18n>ttlObjectForm}"
 							key="form"
 							icon="{i18n>iObjectForm}">
