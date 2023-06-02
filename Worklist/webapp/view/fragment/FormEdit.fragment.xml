@@ -37,6 +37,16 @@
                                 />
 							</f:fields>
 						</f:FormElement>
+						<f:FormElement label="{i18n>ttlRating}">
+							<f:fields>
+								<Input
+                                    value="{Rating}"
+                                    
+                                    width="250px"
+                                    valueLiveUpdate="true"
+                                />
+							</f:fields>
+						</f:FormElement>
                         <f:FormElement label="{i18n>ttlMaterialDescription}">
 							<f:fields>
 								<Input

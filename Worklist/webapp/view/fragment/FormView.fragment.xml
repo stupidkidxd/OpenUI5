@@ -32,6 +32,11 @@
 								<Text text="{MaterialText}"/>
 							</f:fields>
 						</f:FormElement>
+						<f:FormElement label="{i18n>ttlRating}">
+							<f:fields>
+								<Text text="{Rating}"/>
+							</f:fields>
+						</f:FormElement>
                         <f:FormElement label="{i18n>ttlMaterialDescription}">
 							<f:fields>
 								<Text text="{MaterialDescription}"/>

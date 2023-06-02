@@ -86,6 +86,7 @@ sap.ui.define([
 			_closeCreateDialog: function(){
 				[
 					Fragment.byId("fCreateDialog", "iMaterialText"),
+					Fragment.byId("fCreateDialog", "ratingField"),
 					Fragment.byId("fCreateDialog", "cbGroupID"),
 					Fragment.byId("fCreateDialog", "cbSubGroupID"),
 				].forEach(oControl => oControl.setValueState("None"));
@@ -95,6 +96,7 @@ sap.ui.define([
 			_validateSaveMaterial: function() {
 				[
 					Fragment.byId("fCreateDialog", "iMaterialText"),
+					Fragment.byId("fCreateDialog", "ratingField"),
 					Fragment.byId("fCreateDialog", "cbGroupID"),
 					Fragment.byId("fCreateDialog", "cbSubGroupID"),
 				].forEach(oControl => {
@@ -203,6 +205,12 @@ sap.ui.define([
 			  	let bSuccess = true;
 			  	let sErrorText;
 			  	switch (oEvent.getSource().getFieldGroupIds()[0]) {
+					case "ratingField":
+						const sRatingValue = oControl.getValue();
+						const oRatingRegex = /^[0-9]{1}\.[0-9]{2}$/;
+						bSuccess = oRatingRegex.test(sRatingValue);
+						sErrorText = "Enter a valid rating (e.g., 1.45)!";
+						break;
 			  		case "input":
 			  			bSuccess = !!oControl.getValue();
 			  			sErrorText = "Enter Text!";
