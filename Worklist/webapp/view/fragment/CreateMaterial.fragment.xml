@@ -10,10 +10,12 @@
                 />
             <Input
                 value="{path: 'MaterialText', type: 'sap.ui.model.odata.type.String', constraints: {nullable: false}}" change="onChangeMaterialText" maxLength="128"
-                fieldGroupIds="input"/>
+                fieldGroupIds="input" id="iMaterialText"/>
             <Label
-                text="{i18n>ttlGroup}:"/>
+                text="{i18n>ttlGroup}:"
+                required="true"/>
             <ComboBox
+            	id="cbGroupID"
                 width="100%"
                 selectedKey="{GroupID}"
                 fieldGroupIds="comboBox"
@@ -25,8 +27,10 @@
             </ComboBox>    
 
             <Label
-                text="{i18n>ttlSubGroup}:"/>
+                text="{i18n>ttlSubGroup}:"
+                required="true"/>
             <ComboBox
+            	id="cbSubGroupID"
                 width="100%"
                 selectedKey="{SubGroupID}"
                 fieldGroupIds="comboBox"

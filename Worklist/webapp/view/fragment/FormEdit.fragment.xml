@@ -55,7 +55,7 @@
 					<f:formElements>
 						<f:FormElement label="{i18n>lGroupText}">
 							<f:fields>
-								<Select
+								<ComboBox
                                     width="15em"
                                     forceSelection="false"
                                     selectedKey="{GroupID}"
@@ -70,12 +70,12 @@
                                     <core:Item
                                         key="{GroupID}"
                                         text="{GroupText}"/>
-                                </Select>  
+                                </ComboBox>  
 							</f:fields>
 						</f:FormElement>
 						<f:FormElement label="{i18n>lSubGroupText}">
 							<f:fields>
-								<Select
+								<ComboBox
                                     width="15em"
                                     forceSelection="false"
                                     selectedKey="{SubGroupID}"
@@ -90,7 +90,7 @@
                                     <core:Item
                                         key="{SubGroupID}"
                                         text="{SubGroupText}"/>
-                                </Select> 
+                                </ComboBox> 
 							</f:fields>
 						</f:FormElement>
 					</f:formElements>

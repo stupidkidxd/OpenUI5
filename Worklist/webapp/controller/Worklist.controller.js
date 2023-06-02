@@ -28,7 +28,8 @@ sap.ui.define([
 					shareSendEmailSubject: this.getResourceBundle().getText("shareSendEmailWorklistSubject"),
 					shareSendEmailMessage: this.getResourceBundle().getText("shareSendEmailWorklistMessage", [location.href]),
 					tableNoDataText : this.getResourceBundle().getText("tableNoDataText"),
-					tableBusyDelay : 0
+					tableBusyDelay : 0,
+					validateError: false
 				});
 				this.setModel(oViewModel, "worklistView");
 
@@ -83,12 +84,30 @@ sap.ui.define([
 			},
 
 			_closeCreateDialog: function(){
+				[
+					Fragment.byId("fCreateDialog", "iMaterialText"),
+					Fragment.byId("fCreateDialog", "cbGroupID"),
+					Fragment.byId("fCreateDialog", "cbSubGroupID"),
+				].forEach(oControl => oControl.setValueState("None"));
 				this.oCreateDialog.close();
+			},
+			
+			_validateSaveMaterial: function() {
+				[
+					Fragment.byId("fCreateDialog", "iMaterialText"),
+					Fragment.byId("fCreateDialog", "cbGroupID"),
+					Fragment.byId("fCreateDialog", "cbSubGroupID"),
+				].forEach(oControl => {
+					oControl.fireValidateFieldGroup();
+				})	
 			},
 
 			onPressSaveMaterial: function(){
-				this.getModel().submitChanges();
-				this._closeCreateDialog();
+				this._validateSaveMaterial();
+				if (!this.getModel("worklistView").getProperty("/validateError")) {
+					this.getModel().submitChanges();
+					this._closeCreateDialog();
+				}
 			},
 
 			onPressCloseCreateDialog: function(){
@@ -181,18 +200,19 @@ sap.ui.define([
 			  
 			  onValidateFieldGroup: function(oEvent) {
 			  	const oControl = oEvent.getSource();
-			  	let sSuccess = true;
+			  	let bSuccess = true;
 			  	let sErrorText;
-			  	switch (oEvent.getParameter("fieldGroupIds")[0]) {
+			  	switch (oEvent.getSource().getFieldGroupIds()[0]) {
 			  		case "input":
-			  			sSuccess = !!oControl.getValue();
+			  			bSuccess = !!oControl.getValue();
 			  			sErrorText = "Enter Text!";
 			  			break;
 					case "comboBox":
-						sSuccess = oControl.getItems().includes(oControl.getSelectedItem());
+						bSuccess = oControl.getItems().includes(oControl.getSelectedItem());
 						sErrorText = "Select value!";
 			  	}
-			  	oControl.setValueState(sSuccess ? "None" : "Error");
+			  	this.getModel("worklistView").setProperty("/validateError", !bSuccess);
+			  	oControl.setValueState(bSuccess ? "None" : "Error");
 			  	oControl.setValueStateText(sErrorText);
 			  }
 
