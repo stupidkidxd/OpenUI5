@@ -35,6 +35,7 @@ sap.ui.define([
 				oTable.attachEventOnce("updateFinished", function(){
 					oViewModel.setProperty("/tableBusyDelay", iOriginalBusyDelay);
 				});
+				sap.ui.getCore().getMessageManager().registerObject(this.getView(), true);
 			},
 
 			onUpdateFinished : function (oEvent) {
@@ -169,6 +170,30 @@ sap.ui.define([
 					}
 				  }
 				});
+			  },
+
+			  onChangeMaterialText: function(oEvent) {
+				const oSource = oEvent.getSource();
+				if (!oSource.getValue()) {
+					oSource.setValueState("Error");			//mozhno napisat' oSource.setValueState.Error
+				}
+			  },
+			  
+			  onValidateFieldGroup: function(oEvent) {
+			  	const oControl = oEvent.getSource();
+			  	let sSuccess = true;
+			  	let sErrorText;
+			  	switch (oEvent.getParameter("fieldGroupIds")[0]) {
+			  		case "input":
+			  			sSuccess = !!oControl.getValue();
+			  			sErrorText = "Enter Text!";
+			  			break;
+					case "comboBox":
+						sSuccess = oControl.getItems().includes(oControl.getSelectedItem());
+						sErrorText = "Select value!";
+			  	}
+			  	oControl.setValueState(sSuccess ? "None" : "Error");
+			  	oControl.setValueStateText(sErrorText);
 			  }
 
 		});

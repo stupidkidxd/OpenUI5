@@ -3,43 +3,48 @@
     xmlns="sap.m">
     <Dialog
         title="{i18n>ttlCreateMaterial}">
-        <VBox class="sapUiSmallMargin">
+        <VBox class="sapUiSmallMargin" validateFieldGroup="onValidateFieldGroup">
             <Label
-                text="{i18n>ttlMaterialText}:"/>
+                text="{i18n>ttlMaterialText}:"
+                required="true"
+                />
             <Input
-                value="{MaterialText}"/>
-
+                value="{path: 'MaterialText', type: 'sap.ui.model.odata.type.String', constraints: {nullable: false}}" change="onChangeMaterialText" maxLength="128"
+                fieldGroupIds="input"/>
             <Label
                 text="{i18n>ttlGroup}:"/>
-            <Select
+            <ComboBox
                 width="100%"
                 selectedKey="{GroupID}"
+                fieldGroupIds="comboBox"
                 items="{path: '/zjblessons_base_Groups',
                     sorter: {path: 'GroupText'}}">
                 <core:Item
                     key="{GroupID}"
                     text="{GroupText}"/>
-            </Select>    
+            </ComboBox>    
 
             <Label
                 text="{i18n>ttlSubGroup}:"/>
-            <Select
+            <ComboBox
                 width="100%"
                 selectedKey="{SubGroupID}"
+                fieldGroupIds="comboBox"
                 items="{path: '/zjblessons_base_SubGroups',
                     sorter: {path: 'SubGroupText'}}">
                 <core:Item
                     key="{SubGroupID}"
                     text="{SubGroupText}"/>
-            </Select>
+            </ComboBox>
 
             <Label
                 text="{i18n>ttlMaterialDescription}"/>
             <TextArea
                 width="100%"
                 value="{MaterialDescription}"
-                maxLength="1000"
-                height="10em"/>    
+                maxLength="256"
+                height="10em"
+                />    
         </VBox>
 
         <beginButton>
