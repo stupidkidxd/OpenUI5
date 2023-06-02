@@ -17,7 +17,7 @@ sap.ui.define([
 				return parseFloat(sValue).toFixed(2);
 			},
 
-			creationInfo: function(oModified,sModifiedFullName) {
+			creationInfo: function(oModified,sModifiedFullName) { //5.10
 				if(oModified){
 					const oDateFormat = sap.ui.core.format.DateFormat.getDateTimeInstance({
 						pattern: "EEE, MMM d, yyyy",
@@ -26,6 +26,12 @@ sap.ui.define([
 				}
 				
 				return oModified;
+			},
+
+			formatName: function(sName) {
+				return sName.split(" ")
+					.map((sPart, index) => index === 0 ? `${sPart[0]}.`: sPart)
+					.join(" ");
 			}
 
 		};

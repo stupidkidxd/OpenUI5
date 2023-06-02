@@ -86,7 +86,7 @@
 						</f:FormElement>
 						<f:FormElement label="{i18n>ttlCreatedBy}">
 							<f:fields>
-                                <Text text="{CreatedByFullName}"/>
+                                <Text text="{path: 'CreatedByFullName', formatter: '.formatter.formatName'}"/>
 							</f:fields>
 						</f:FormElement>
 						<f:FormElement label="{i18n>ttlTableModified}">
