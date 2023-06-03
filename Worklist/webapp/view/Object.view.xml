@@ -53,6 +53,10 @@
 								<InputListItem label="{i18n>lMaterialDescription}" visible="{= !${objectView>/editMode}}">
 									<Text text="{MaterialDescription}" visible="{= !${objectView>/editMode}}"/>
 								</InputListItem>
+								
+								<InputListItem label="{i18n>lRating}" visible="{= !${objectView>/editMode}}">
+									<Text text="{Rating}" visible="{= !${objectView>/editMode}}"/>
+								</InputListItem>
 
 								<InputListItem label="{i18n>lGroupText}" visible="{= !${objectView>/editMode}}">
 									<Text text="{GroupText}" visible="{= !${objectView>/editMode}}"/>
@@ -61,7 +65,7 @@
 								<InputListItem label="{i18n>lSubGroupText}" visible="{= !${objectView>/editMode}}">
 									<Text text="{SubGroupText}" visible="{= !${objectView>/editMode}}"/>
 								</InputListItem>
-
+								
 								<InputListItem label="{i18n>lTableCreated}" visible="{= !${objectView>/editMode}}">
 									<Text text="{path: 'Created', type: 'sap.ui.model.type.DateTime', formatOptions: {style:'short'}}" visible="{= !${objectView>/editMode}}"/>
 								</InputListItem>
@@ -94,6 +98,12 @@
 									<Input value="{MaterialDescription}" 
 									maxLength="256" 
 									enabled="{= ${objectView>editMode} &amp;&amp; ${MaterialDescription} === ' ' || undefined || null}"
+									width="20em"/>
+								</InputListItem>
+								
+								<InputListItem label="{i18n>lRating}" visible="{objectView>/editMode}">
+									<Input value="{Rating}"
+									enabled="{= ${objectView>editMode} &amp;&amp; ${Rating} === ' ' || undefined || null}"
 									width="20em"/>
 								</InputListItem>
 

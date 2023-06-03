@@ -9,14 +9,14 @@
                 required="true"
                 />
             <Input
-                value="{path: 'MaterialText', type: 'sap.ui.model.odata.type.String', constraints: {nullable: false}}" change="onChangeMaterialText" maxLength="128"
+                value="{path: 'MaterialText', type: 'sap.ui.model.odata.type.String', formatOptions: { scale: 0 }, constraints: {nullable: false}}" change="onChangeMaterialText" maxLength="128"
                 fieldGroupIds="input" id="iMaterialText"/>
             <Label
                 text="{i18n>ttlRating}:"
                 required="true"
                 />
             <Input
-                value="{path: 'Rating', type: 'sap.ui.model.odata.type.Decimal', constraints: {nullable: false}}" change="onChangeRating"
+                value="{path: 'Rating', type: 'sap.ui.model.odata.type.Decimal', constraints: {nullable: false}}" change="onChangeRating" valueLiveUpdate="true"
                 fieldGroupIds="ratingField" id="iRating"/>
             <Label
                 text="{i18n>ttlGroup}:"

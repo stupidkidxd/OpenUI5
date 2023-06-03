@@ -86,7 +86,7 @@ sap.ui.define([
 			_closeCreateDialog: function(){
 				[
 					Fragment.byId("fCreateDialog", "iMaterialText"),
-					Fragment.byId("fCreateDialog", "ratingField"),
+					Fragment.byId("fCreateDialog", "iRating"),
 					Fragment.byId("fCreateDialog", "cbGroupID"),
 					Fragment.byId("fCreateDialog", "cbSubGroupID"),
 				].forEach(oControl => oControl.setValueState("None"));
@@ -96,7 +96,7 @@ sap.ui.define([
 			_validateSaveMaterial: function() {
 				[
 					Fragment.byId("fCreateDialog", "iMaterialText"),
-					Fragment.byId("fCreateDialog", "ratingField"),
+					Fragment.byId("fCreateDialog", "iRating"),
 					Fragment.byId("fCreateDialog", "cbGroupID"),
 					Fragment.byId("fCreateDialog", "cbSubGroupID"),
 				].forEach(oControl => {
@@ -106,6 +106,7 @@ sap.ui.define([
 
 			onPressSaveMaterial: function(){
 				this._validateSaveMaterial();
+				
 				if (!this.getModel("worklistView").getProperty("/validateError")) {
 					this.getModel().submitChanges();
 					this._closeCreateDialog();
