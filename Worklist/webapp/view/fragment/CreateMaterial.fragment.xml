@@ -16,7 +16,7 @@
                 required="true"
                 />
             <Input
-                value="{path: 'Rating', type: 'sap.ui.model.odata.type.Decimal', constraints: {nullable: false}}" change="onChangeRating" valueLiveUpdate="true"
+                value="{path: 'Rating', type: 'sap.ui.model.odata.type.Decimal', constraints: {nullable: false}}" valueLiveUpdate="true"
                 fieldGroupIds="ratingField" id="iRating"/>
             <Label
                 text="{i18n>ttlGroup}:"
