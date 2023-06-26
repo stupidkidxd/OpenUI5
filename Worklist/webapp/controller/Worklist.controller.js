@@ -272,7 +272,29 @@ sap.ui.define([
 			  },
 
 			  onPressMaterialInfo: function(oEvent) {
-				
+				const oSource = oEvent.getSource();
+				if (!this._pPopover){
+					this._pPopover = Fragment.load({
+						id: this.getView().getId(),
+						name: "zjblessons.Worklist.view.fragment.Popover",
+						controller: this,
+					}).then((oPopover) => {
+						this.getView().addDependent(oPopover);
+						return oPopover;
+					});
+				}
+				this._pPopover.then((oPopover) => {
+					oPopover.setBindingContext(oSource.getBindingContext());
+					oPopover.openBy(oSource);
+				})
+			  },
+
+			  onPressClosePopover: function(oEvent) {
+				oEvent.getSource().getParent().getParent().close(); //использовать getParent только тогда, когда структура конст
+			  },
+
+			  onPressGoToMaterial: function(oEvent) {
+				this._showObject(oEvent.getSource());			
 			  }
 
 		});

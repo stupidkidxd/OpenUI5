@@ -1,0 +1,25 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+>
+
+    <Popover title="{MaterialText}" titleAlignment="Center" initialFocus="action" class="sapUiContentPadding">        <!--modal="true" чтобы сделать модальный поповер(блок интерфейса)-->
+        <footer>
+            <Toolbar>
+                <Button text="{i18n>btnClose}" press="onPressClosePopover"></Button>
+                <Button text="Go to material" press="onPressGoToMaterial"></Button>
+            </Toolbar>
+        </footer>
+        <VBox>
+            <FlexBox alignItems="Center" renderType="Bare" class="sapUiTinyMargin">
+                <Text text="{i18n>lGroupText}:" class="sapUiTinyMarginEnd"/>
+                <Label text="{GroupText}" design="Bold"/>
+            </FlexBox>
+            <FlexBox alignItems="Center" renderType="Bare" class="sapUiTinyMargin">
+                <Text text="{i18n>lSubGroupText}:" class="sapUiTinyMarginEnd"/>
+                <Label text="{SubGroupText}" design="Bold"/>
+            </FlexBox>
+        </VBox>
+    </Popover>
+
+</core:FragmentDefinition>
