@@ -295,6 +295,23 @@ sap.ui.define([
 
 			  onPressGoToMaterial: function(oEvent) {
 				this._showObject(oEvent.getSource());			
+			  },
+
+			  onPressOpenActionSheet: function(oEvent) {
+				const oSource = oEvent.getSource();
+				if (!this._pActionSheet) {
+					this._pActionSheet = Fragment.load({
+						id: this.getView().getId(),
+						name: "zjblessons.Worklist.view.fragment.ActionSheet",
+						controller: this,
+					}).then((oActionSheet) => {
+						this.getView().addDependent(oActionSheet);
+						return oActionSheet;
+					});
+				}
+				this._pActionSheet.then((oActionSheet) => {
+					oActionSheet.openBy(oSource);
+				});
 			  }
 
 		});

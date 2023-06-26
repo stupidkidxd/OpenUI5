@@ -42,6 +42,10 @@
 							width="auto">
 						</SearchField>
 						<Button
+							press="onPressOpenActionSheet"
+							text="{i18n>btnActions}"
+							type="Attention"/>
+						<!--<Button
 							press="onPressCreateMaterial"
 							icon="{i18n>iCreate}"
 							text="{i18n>btnCreate}"
@@ -50,7 +54,7 @@
 							press="onPressRefresh"
 							icon="sap-icon://refresh"
 							tooltip="{i18n>Refresh}"
-						/>
+						/>-->
 					</Toolbar>
 				</headerToolbar>
 
