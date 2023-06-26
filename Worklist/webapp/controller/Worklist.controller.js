@@ -82,19 +82,48 @@ sap.ui.define([
 					});
 				}
 				this.pCreateMaterial.then(oDialog => {
+					oDialog.setEscapeHandler(this._pEscapeHandler.bind(this));
 					oDialog.setBindingContext(oEntryContext);
 					oDialog.open();
 				})
 			},
 
-			_closeCreateDialog: function(){
+			_pEscapeHandler: function(oPromise) {
+				if(!this.oConfirmEscapePressPreventDialog) {
+					this.oConfirmEscapePressPreventDialog = new sap.m.Dialog({
+						title: "Are u sure?",
+						content: new sap.m.Text({
+							text: "Ur changes will be lost",
+						}),
+						type: sap.m.DialogType.Message,
+						icon: sap.ui.core.IconPool.getIconURI("message-information"),
+						buttons: [
+							new sap.m.Button({
+								text: "Yes",
+								press: function(){
+									this.oConfirmEscapePressPreventDialog.close();
+									this.oCreateDialog.close();
+								}.bind(this),
+							}),
+							new sap.m.Button({
+								text: "No",
+								press: function(){
+									this.oConfirmEscapePressPreventDialog.close();
+								}.bind(this),
+							}),
+						],
+					});
+				}
+				this.oConfirmEscapePressPreventDialog.open();
+			},
+
+			_clearCreateDialog: function(){
 				[
 					Fragment.byId("fCreateDialog", "iMaterialText"),
 					Fragment.byId("fCreateDialog", "iRating"),
 					Fragment.byId("fCreateDialog", "cbGroupID"),
 					Fragment.byId("fCreateDialog", "cbSubGroupID"),
 				].forEach(oControl => oControl.setValueState("None"));
-				this.oCreateDialog.close();
 			},
 			
 			_validateSaveMaterial: function() {
@@ -113,13 +142,13 @@ sap.ui.define([
 				
 				if (!this.getModel("worklistView").getProperty("/validateError")) {
 					this.getModel().submitChanges();
-					this._closeCreateDialog();
+					this.oCreateDialog.close();
 				}
 			},
 
 			onPressCloseCreateDialog: function(){
 				this.getModel().resetChanges();
-				this._closeCreateDialog();
+				this.oCreateDialog.close();
 			},
 
 			onPressCreateMaterial: function() {
@@ -239,6 +268,7 @@ sap.ui.define([
 					oEvent.getSource().destroy();
 					this.oCreateDialog = null;
 				}
+				this._clearCreateDialog();
 			  }
 
 		});
