@@ -269,6 +269,10 @@ sap.ui.define([
 					this.oCreateDialog = null;
 				}
 				this._clearCreateDialog();
+			  },
+
+			  onPressMaterialInfo: function(oEvent) {
+				
 			  }
 
 		});

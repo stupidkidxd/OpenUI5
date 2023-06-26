@@ -81,7 +81,7 @@
 						type="Navigation"
 						press="onPressShowMaterial">
 						<cells>
-							<ObjectIdentifier title="{MaterialText}"/>
+							<Link text="{MaterialText}" press="onPressMaterialInfo"/>
 							<ObjectIdentifier title="{MaterialDescription}"/>
 							<ObjectIdentifier title="{CreatedByFullName}"/>
 							<ObjectIdentifier title="{
