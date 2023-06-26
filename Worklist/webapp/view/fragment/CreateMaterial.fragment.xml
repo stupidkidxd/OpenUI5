@@ -2,7 +2,13 @@
     xmlns:core="sap.ui.core"
     xmlns="sap.m">
     <Dialog
-        title="{i18n>ttlCreateMaterial}">
+        title="{i18n>ttlCreateMaterial}"
+        draggable="true"
+        resizable="true"
+        contentHeight="{worklistView>/dialogParams/height}"
+        contentWidth="{worklistView>/dialogParams/width}"
+        class="sapUiSizeCompact"
+        beforeClose="onBeforeCloseDialog">
         <VBox class="sapUiSmallMargin" validateFieldGroup="onValidateFieldGroup">
             <Label
                 text="{i18n>ttlMaterialText}:"
@@ -16,7 +22,7 @@
                 required="true"
                 />
             <Input
-                value="{path: 'Rating', type: 'sap.ui.model.odata.type.Decimal', constraints: {nullable: false}}" valueLiveUpdate="true"
+                value="{path: 'Rating', type: 'sap.ui.model.odata.type.Decimal', constraints: {nullable: false, precision: 3, scale: 2}}"
                 fieldGroupIds="ratingField" id="iRating"/>
             <Label
                 text="{i18n>ttlGroup}:"

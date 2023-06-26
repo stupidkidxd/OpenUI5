@@ -29,14 +29,18 @@ sap.ui.define([
 					shareSendEmailMessage: this.getResourceBundle().getText("shareSendEmailWorklistMessage", [location.href]),
 					tableNoDataText : this.getResourceBundle().getText("tableNoDataText"),
 					tableBusyDelay : 0,
-					validateError: false
+					validateError: false,
+					dialogParams: {
+						height: "400px",
+						width: "250px",
+					}
 				});
 				this.setModel(oViewModel, "worklistView");
 
 				oTable.attachEventOnce("updateFinished", function(){
 					oViewModel.setProperty("/tableBusyDelay", iOriginalBusyDelay);
 				});
-				sap.ui.getCore().getMessageManager().registerObject(this.getView(), true);
+				//sap.ui.getCore().getMessageManager().registerObject(this.getView(), true);
 			},
 
 			onUpdateFinished : function (oEvent) {
@@ -223,6 +227,18 @@ sap.ui.define([
 			  	this.getModel("worklistView").setProperty("/validateError", !bSuccess);
 			  	oControl.setValueState(bSuccess ? "None" : "Error");
 			  	oControl.setValueStateText(sErrorText);
+			  },
+
+			  onBeforeCloseDialog: function(oEvent) {
+				const oSource = oEvent.getSource();
+				const oDialogSize = oEvent.getSource()._oManuallySetSize;
+				if(oDialogSize) {
+					this.getModel("worklistView").setProperty("/dialogParams/height", oDialogSize.height + "px");
+					this.getModel("worklistView").setProperty("/dialogParams/width", oDialogSize.width + "px");
+				} else {
+					oEvent.getSource().destroy();
+					this.oCreateDialog = null;
+				}
 			  }
 
 		});
