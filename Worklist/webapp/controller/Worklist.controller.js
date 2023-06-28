@@ -217,9 +217,29 @@ sap.ui.define([
 				this._validateSaveMaterial();
 				
 				if (!this.getModel("worklistView").getProperty("/validateError")) {
-					this.getModel().submitChanges();
+					this.getModel().submitChanges({
+						success: (oData) => {
+							this._addMessageCreate(oData);
+						},
+						error: (oError) => {
+
+						}
+					});
 					this.oCreateDialog.close();
 				}
+			},
+
+			_addMessageCreate: function(oData) {
+				const aMessages = this.getModel("worklistView").getProperty("/Messages");
+				const oDataResponse = oData.__batchResponses[0].__changeResponses[0].data;
+
+				aMessages.push({
+					type: "Success",
+					title: "Created",
+					description: `${oDataResponse.MaterialDescription}, ${oDataResponse.GroupText}, ${oDataResponse.SubGroupText}`,
+					subtitle: `Material ${oDataResponse.MaterialText} has been created`,
+					counter: 1
+				})
 			},
 
 			onPressCloseCreateDialog: function(){
