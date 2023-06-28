@@ -5,8 +5,9 @@ sap.ui.define([
 		"zjblessons/Worklist/model/formatter",
 		"sap/ui/model/Filter",
 		"sap/ui/model/FilterOperator",
-		"sap/ui/core/Fragment"
-	], function (BaseController, JSONModel, formatter, Filter, FilterOperator, Fragment) {
+		"sap/ui/core/Fragment",
+		"sap/m/MessagePopover"
+	], function (BaseController, JSONModel, formatter, Filter, FilterOperator, Fragment, MessagePopover) {
 		"use strict";
 
 		return BaseController.extend("zjblessons.Worklist.controller.Worklist", {
@@ -33,7 +34,43 @@ sap.ui.define([
 					dialogParams: {
 						height: "400px",
 						width: "250px",
-					}
+					},
+					Messages: [
+						{
+							type: 'Error',
+							title: 'Error message',
+							active: true,
+							description: sErrorDescription,
+							subtitle: 'Example of subtitle',
+							counter: 1
+						}, 
+						{
+							type: 'Warning',
+							title: 'Warning without description',
+							description: ''
+						}, 
+						{
+							type: 'Success',
+							title: 'Success message',
+							description: 'First Success message description',
+							subtitle: 'Example of subtitle',
+							counter: 1
+						}, 
+						{
+							type: 'Error',
+							title: 'Error message',
+							description: 'Second Error message description',
+							subtitle: 'Example of subtitle',
+							counter: 2
+						}, 
+						{
+							type: 'Information',
+							title: 'Information message',
+							description: 'First Information message description',
+							subtitle: 'Example of subtitle',
+							counter: 1
+						},
+					],
 				});
 				this.setModel(oViewModel, "worklistView");
 
@@ -41,6 +78,45 @@ sap.ui.define([
 					oViewModel.setProperty("/tableBusyDelay", iOriginalBusyDelay);
 				});
 				//sap.ui.getCore().getMessageManager().registerObject(this.getView(), true);
+
+				var oLink = new sap.m.Link({
+					text: "Show more information",
+					href: "http://sap.com",
+					target: "_blank"
+				});
+	
+				var oMessageTemplate = new sap.m.MessageItem({
+					type: '{worklistView>type}',
+					title: '{worklistView>title}',
+					activeTitle: "{worklistView>active}",
+					description: '{worklistView>description}',
+					subtitle: '{worklistView>subtitle}',
+					counter: '{worklistView>counter}',
+					link: oLink
+				});
+	
+				var sErrorDescription = 'First Error message description. \n' +
+					'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod' +
+					'tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,' +
+					'quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo' +
+					'consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse' +
+					'cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non' +
+					'proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
+	
+				this._oMessagePopover = new MessagePopover({
+					items: {
+						model: "worklistView",
+						path: 'worklistView>/Messages',
+						template: oMessageTemplate
+					},
+					activeTitlePress: function () {
+						MessageToast.show('Active title is pressed');
+					}
+				});
+	
+				
+				
+				this.byId("messagePopoverBTN").addDependent(this._oMessagePopover);
 			},
 
 			onUpdateFinished : function (oEvent) {
@@ -312,6 +388,10 @@ sap.ui.define([
 				this._pActionSheet.then((oActionSheet) => {
 					oActionSheet.openBy(oSource);
 				});
+			  },
+
+			  handleMessagePopoverPress: function(oEvent) {
+				this._oMessagePopover.toggle(oEvent.getSource());
 			  }
 
 		});

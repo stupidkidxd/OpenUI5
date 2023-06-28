@@ -7,7 +7,8 @@
 	<semantic:SemanticPage
 		id="page"
 		headerPinnable="false"
-		toggleHeaderOnTitleClick="false">
+		toggleHeaderOnTitleClick="false"
+		showFooter="true">
 
 		<semantic:titleHeading>
 			<Title text="{i18n>worklistTitle}" />
@@ -115,9 +116,14 @@
 			</Table>
 		</semantic:content>
 
-		<semantic:sendEmailAction>
-			<semantic:SendEmailAction id="shareEmail" press="onShareEmailPress"/>
-		</semantic:sendEmailAction>
+		<semantic:footerCustomActions>
+			<Button 
+			id="messagePopoverBTN" 
+			press="handleMessagePopoverPress"
+			text="test" 
+			icon="sap-icon://accept" 
+			type="Reject"/>
+		</semantic:footerCustomActions>
 
 
 	</semantic:SemanticPage>
