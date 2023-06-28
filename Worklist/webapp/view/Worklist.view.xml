@@ -46,6 +46,9 @@
 							press="onPressOpenActionSheet"
 							text="{i18n>btnActions}"
 							type="Attention"/>
+						<Button
+							text="Show select dialog"
+							press="onOpenSelectDialog"/>
 						<!--<Button
 							press="onPressCreateMaterial"
 							icon="{i18n>iCreate}"

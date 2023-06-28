@@ -1,0 +1,30 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<SelectDialog
+		id="mySelectDialog"
+		noDataText="No Products Found"
+		title="Select Material"
+		search=".onSearchSelectDialog"
+		growingThreshold="20"
+        contentHeight="500px"
+        contentWidth="320px"
+		draggable="true"
+        resizable="true"
+        class="sapUiSizeCompact"
+		items="{
+            path: '/zjblessons_base_Materials',
+            sorter: {
+                path: 'Created',
+                descending: false
+            }
+        }">
+		<StandardListItem
+			title="{MaterialText}"
+			description="{MaterialDescription}"
+			iconDensityAware="false"
+			iconInset="false"
+			type="Active"
+        />
+	</SelectDialog>
+</core:FragmentDefinition>

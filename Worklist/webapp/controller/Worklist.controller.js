@@ -77,6 +77,8 @@ sap.ui.define([
 				oTable.attachEventOnce("updateFinished", function(){
 					oViewModel.setProperty("/tableBusyDelay", iOriginalBusyDelay);
 				});
+
+				
 				//sap.ui.getCore().getMessageManager().registerObject(this.getView(), true);
 
 				var oLink = new sap.m.Link({
@@ -113,9 +115,7 @@ sap.ui.define([
 						MessageToast.show('Active title is pressed');
 					}
 				});
-	
-				
-				
+					
 				this.byId("messagePopoverBTN").addDependent(this._oMessagePopover);
 			},
 
@@ -131,16 +131,32 @@ sap.ui.define([
 				this.getModel("worklistView").setProperty("/worklistTableTitle", sTitle);
 			},
 
-			onPressShowMaterial : function (oEvent) {
-				this._showObject(oEvent.getSource());
+			_addMessageInformation: function(materialText) {
+				const oViewModel = this.getModel("worklistView");
+				const aMessages = oViewModel.getProperty("/Messages");
+				aMessages.push({
+					type: "Information",
+					title: "Material Viewed",
+					description: `Material ${materialText} has been viewed`,
+					subtitle: "",
+					counter: 1
+				});
+				oViewModel.setProperty("/Messages", aMessages);
 			},
 			
+			onPressShowMaterial: function(oEvent) {
+				this._showObject(oEvent.getSource());
+				const materialText = oEvent.getSource().getBindingContext().getProperty("MaterialText");
+				this._addMessageInformation(materialText);
+			},
+				
+			  
 			_showObject : function (oItem) {
 				this.getRouter().navTo("object", {
 					objectId: oItem.getBindingContext().getProperty("MaterialID")
 				});
 			},
-
+			
 			onNavBack : function() {
 				history.go(-1);
 			},
@@ -213,19 +229,20 @@ sap.ui.define([
 				})	
 			},
 
-			onPressSaveMaterial: function(){
+			onPressSaveMaterial: function() {
 				this._validateSaveMaterial();
-				
+			
 				if (!this.getModel("worklistView").getProperty("/validateError")) {
 					this.getModel().submitChanges({
 						success: (oData) => {
-							if(oData.__batchResponses[0].response.statusCode === '400') {
+							if (oData.__batchResponses[0].response.statusCode === "400") {
 								this._addMessageCreateError(
-									oData.__batchResponses[0].response.message, 
-									oData.__batchResponses[0].response.statusText);
+									oData.__batchResponses[0].response.message,
+									oData.__batchResponses[0].response.statusText
+								);
 							} else {
 								this._addMessageCreate(oData);
-							}							
+							}
 						}
 					});
 					this.oCreateDialog.close();
@@ -247,7 +264,6 @@ sap.ui.define([
 			_addMessageCreate: function(oData) {
 				const aMessages = this.getModel("worklistView").getProperty("/Messages");
 				const oDataResponse = oData.__batchResponses[0].__changeResponses[0].data;
-
 				aMessages.push({
 					type: "Success",
 					title: "Created",
@@ -255,11 +271,6 @@ sap.ui.define([
 					subtitle: `Material ${oDataResponse.MaterialText} has been created`,
 					counter: 1
 				});
-			},
-
-			onPressCloseCreateDialog: function(){
-				this.getModel().resetChanges();
-				this.oCreateDialog.close();
 			},
 
 			onPressCreateMaterial: function() {
@@ -274,36 +285,6 @@ sap.ui.define([
 				this._loadCreateFragment(oEntryContext);
 			},
 
-			onSearch : function (oEvent) {
-				const aFilters = [];
-				const sValue = oEvent.getParameter("query") || oEvent.getParameter("newValue");
-
-				if (sValue){
-					aFilters.push(
-						new Filter({
-							filters: [
-								new Filter("MaterialText", FilterOperator.Contains, sValue),
-								new Filter({
-									path: "MaterialDescription", 
-									operator: FilterOperator.Contains, 
-									value1: sValue,
-								}),
-							
-						new Filter({
-							filters: [
-								new Filter('CreatedByFullName', FilterOperator.Contains, sValue),
-								new Filter('ModifiedByFullName', FilterOperator.Contains, sValue),
-							],
-							and: true,
-							})
-						],
-						and:false,
-						})
-					);
-				}
-				this.byId("table").getBinding("items").filter(aFilters);
-			},
-		
 			onPressRefresh: function () {
 				var oTable = this.byId("table");
 				oTable.getBinding("items").refresh();
@@ -331,9 +312,9 @@ sap.ui.define([
 						this._addMessageDeletedError(oError);
 					}
 				});
-			  },
+			},
 
-			  _addMessageDeleted: function() {
+			_addMessageDeleted: function() {
 				const aMessages = this.getModel("worklistView").getProperty("/Messages");
 				aMessages.push({
 					type: "Warning",
@@ -342,9 +323,9 @@ sap.ui.define([
 					subtitle: `Material ${this._oDeletedMaterial.MaterialText} has been deleted`,
 					counter: 1
 				})
-			  },
+			},
 
-			  _addMessageDeletedError: function(oError) {
+			_addMessageDeletedError: function(oError) {
 				const aMessages = this.getModel("worklistView").getProperty("/Messages");
 				aMessages.push({
 					type: "Error",
@@ -353,16 +334,16 @@ sap.ui.define([
 					subtitle: `Material ${this._oDeletedMaterial.MaterialText} has not been deleted`,
 					counter: 1
 				})
-			  },
+			},
 
-			  onChangeMaterialText: function(oEvent) {
+			onChangeMaterialText: function(oEvent) {
 				const oSource = oEvent.getSource();
 				if (!oSource.getValue()) {
 					oSource.setValueState("Error");			//mozhno napisat' oSource.setValueState.Error
 				}
-			  },
+			},
 			  
-			  onValidateFieldGroup: function(oEvent) {
+			onValidateFieldGroup: function(oEvent) {
 			  	const oControl = oEvent.getSource();
 			  	let bSuccess = true;
 			  	let sErrorText;
@@ -384,9 +365,9 @@ sap.ui.define([
 			  	this.getModel("worklistView").setProperty("/validateError", !bSuccess);
 			  	oControl.setValueState(bSuccess ? "None" : "Error");
 			  	oControl.setValueStateText(sErrorText);
-			  },
+			},
 
-			  onBeforeCloseDialog: function(oEvent) {
+			onBeforeCloseDialog: function(oEvent) {
 				const oSource = oEvent.getSource();
 				const oDialogSize = oEvent.getSource()._oManuallySetSize;
 				if(oDialogSize) {
@@ -397,9 +378,9 @@ sap.ui.define([
 					this.oCreateDialog = null;
 				}
 				this._clearCreateDialog();
-			  },
+			},
 
-			  onPressMaterialInfo: function(oEvent) {
+			onPressMaterialInfo: function(oEvent) {
 				const oSource = oEvent.getSource();
 				if (!this._pPopover){
 					this._pPopover = Fragment.load({
@@ -415,17 +396,17 @@ sap.ui.define([
 					oPopover.setBindingContext(oSource.getBindingContext());
 					oPopover.openBy(oSource);
 				})
-			  },
+			},
 
-			  onPressClosePopover: function(oEvent) {
+			onPressClosePopover: function(oEvent) {
 				oEvent.getSource().getParent().getParent().close(); //использовать getParent только тогда, когда структура конст
-			  },
+			},
 
-			  onPressGoToMaterial: function(oEvent) {
+			onPressGoToMaterial: function(oEvent) {
 				this._showObject(oEvent.getSource());			
-			  },
+			},
 
-			  onPressOpenActionSheet: function(oEvent) {
+			onPressOpenActionSheet: function(oEvent) {
 				const oSource = oEvent.getSource();
 				if (!this._pActionSheet) {
 					this._pActionSheet = Fragment.load({
@@ -440,11 +421,68 @@ sap.ui.define([
 				this._pActionSheet.then((oActionSheet) => {
 					oActionSheet.openBy(oSource);
 				});
-			  },
+			},
 
-			  handleMessagePopoverPress: function(oEvent) {
+			handleMessagePopoverPress: function(oEvent) {
 				this._oMessagePopover.toggle(oEvent.getSource());
-			  }
+			},
+
+			onOpenSelectDialog: function() {
+				if(!this._pSelectDialog){
+					this._pSelectDialog = Fragment.load({
+						name: "zjblessons.Worklist.view.fragment.SelectDialog",
+						controller: this,
+						id: this.getView().getId()
+					}).then(oDialog => {
+						this.getView().addDependent(oDialog);
+						return Promise.resolve(oDialog);
+					});
+				}
+				this._pSelectDialog.then(oDialog => {
+					oDialog.open();
+					oDialog.getBinding("items").filter([]);
+				})
+			},
+			  
+			onSearch : function (oEvent) {
+				const sValue = oEvent.getParameter("query") || oEvent.getParameter("newValue");
+
+				this.byId("table").getBinding("items").filter(this._getFilters(sValue));
+			},
+
+			_getFilters: function(sValue) {
+				const aFilters = [];
+
+				if (sValue){
+					aFilters.push(
+						new Filter({
+							filters: [
+								new Filter("MaterialText", FilterOperator.Contains, sValue),
+								new Filter({
+									path: "MaterialDescription", 
+									operator: FilterOperator.Contains, 
+									value1: sValue,
+								}),
+							
+						new Filter({
+							filters: [
+								new Filter('CreatedByFullName', FilterOperator.Contains, sValue),
+								new Filter('ModifiedByFullName', FilterOperator.Contains, sValue),
+							],
+							and: true,
+							})
+						],
+						and:false,
+						})
+					);
+				}
+				return aFilters;
+			},
+		
+			onSearchSelectDialog: function(oEvent) {
+				const sValue = oEvent.getParameter("value");
+				oEvent.getParameter("itemsBinding").filter(this._getFilters(sValue));
+			}
 
 		});
 	}
