@@ -219,14 +219,29 @@ sap.ui.define([
 				if (!this.getModel("worklistView").getProperty("/validateError")) {
 					this.getModel().submitChanges({
 						success: (oData) => {
-							this._addMessageCreate(oData);
-						},
-						error: (oError) => {
-
+							if(oData.__batchResponses[0].response.statusCode === '400') {
+								this._addMessageCreateError(
+									oData.__batchResponses[0].response.message, 
+									oData.__batchResponses[0].response.statusText);
+							} else {
+								this._addMessageCreate(oData);
+							}							
 						}
 					});
 					this.oCreateDialog.close();
 				}
+			},
+
+			_addMessageCreateError: function(sMessage,sStatusText) {
+				const aMessages = this.getModel("worklistView").getProperty("/Messages");
+
+				aMessages.push({
+					type: "Error",
+					title: "Not created",
+					description: `Error reason: ${sMessage}`,
+					subtitle: sStatusText,
+					counter: 1
+				});
 			},
 
 			_addMessageCreate: function(oData) {
@@ -239,7 +254,7 @@ sap.ui.define([
 					description: `${oDataResponse.MaterialDescription}, ${oDataResponse.GroupText}, ${oDataResponse.SubGroupText}`,
 					subtitle: `Material ${oDataResponse.MaterialText} has been created`,
 					counter: 1
-				})
+				});
 			},
 
 			onPressCloseCreateDialog: function(){
@@ -304,23 +319,40 @@ sap.ui.define([
 			},
 
 			onPressDeleteMaterial: function (oEvent) {
-				const oSelectedItem = oEvent.getSource();
-				const oBindingContext = oSelectedItem.getBindingContext();
-				const sPath = oBindingContext.getPath();
-			  
-				sap.m.MessageBox.show("Вы действительно желаете удалить запись?", {
-				  icon: sap.m.MessageBox.Icon.WARNING,
-				  title: "Подтверждение удаления",
-				  actions: [sap.m.MessageBox.Action.OK, sap.m.MessageBox.Action.CANCEL],
-				  onClose: function (oAction) {
-					if (oAction === sap.m.MessageBox.Action.OK) {
-					  oBindingContext.getModel().remove(sPath);
-					  sap.m.MessageToast.show("Запись успешно удалена");
-					} else {
-					  sap.m.MessageToast.show("Удаление отменено");
+				const sEntryPath = oEvent.getSource().getBindingContext().getPath();
+
+				this._oDeletedMaterial = oEvent.getSource().getBindingContext().getObject();
+
+				this.getModel().remove(sEntryPath, {
+					success: () => {
+						this._addMessageDeleted();
+					},
+					error: (oError) => {
+						this._addMessageDeletedError(oError);
 					}
-				  }
 				});
+			  },
+
+			  _addMessageDeleted: function() {
+				const aMessages = this.getModel("worklistView").getProperty("/Messages");
+				aMessages.push({
+					type: "Warning",
+					title: "Deleted",
+					description: `${this._oDeletedMaterial.MaterialDescription}, ${this._oDeletedMaterial.GroupText}, ${this._oDeletedMaterial.SubGroupText}`,
+					subtitle: `Material ${this._oDeletedMaterial.MaterialText} has been deleted`,
+					counter: 1
+				})
+			  },
+
+			  _addMessageDeletedError: function(oError) {
+				const aMessages = this.getModel("worklistView").getProperty("/Messages");
+				aMessages.push({
+					type: "Error",
+					title: "Not Deleted",
+					description: `Error reason: ${oError.message}`,
+					subtitle: `Material ${this._oDeletedMaterial.MaterialText} has not been deleted`,
+					counter: 1
+				})
 			  },
 
 			  onChangeMaterialText: function(oEvent) {
