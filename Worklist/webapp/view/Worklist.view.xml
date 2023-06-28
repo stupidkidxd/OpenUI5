@@ -120,9 +120,10 @@
 			<Button 
 			id="messagePopoverBTN" 
 			press="handleMessagePopoverPress"
-			text="test" 
-			icon="sap-icon://accept" 
-			type="Reject"/>
+			text="{path: 'worklistView>/Messages', formatter: '.formatter.highestSeverityMessages'}"
+			icon="{path: 'worklistView>/Messages', formatter: '.formatter.buttonIconFormatter'}"
+			type="{path: 'worklistView>/Messages', formatter: '.formatter.buttonTypeFormatter'}" 
+			/>
 		</semantic:footerCustomActions>
 
 
