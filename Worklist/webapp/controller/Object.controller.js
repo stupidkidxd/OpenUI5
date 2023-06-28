@@ -108,9 +108,25 @@ sap.ui.define([
 			oViewModel.setProperty("/busy", false);
 		},
 		
-		onPressEditMaterial: function(){
-			this.getModel("objectView").setProperty("/editMode", true);
-			this._setEditMode(true);
+		onPressEditMaterial: function() {
+			var oModel = this.getView().getModel();
+			var oGroupSelect = this.getView().byId("groupSelect");
+			var oSubGroupSelect = this.getView().byId("subGroupSelect");
+		
+			// Загрузка данных для селектов
+			oModel.read("/zjblessons_base_Groups", {
+				success: function(oData) {
+					oGroupSelect.setModel(new sap.ui.model.json.JSONModel(oData.results));
+				}
+			});
+		
+			oModel.read("/zjblessons_base_SubGroups", {
+				success: function(oData) {
+					oSubGroupSelect.setModel(new sap.ui.model.json.JSONModel(oData.results));
+				}
+			});
+		
+			this.getView().getModel("objectView").setProperty("/editMode", true);
 		},
 		
 		onPressSaveMaterial: function() {

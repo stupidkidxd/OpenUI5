@@ -17,12 +17,12 @@
 			<Title text="{MaterialText}" />
 		</semantic:titleHeading>
 		
-		<!--<semantic:editAction>
+		<semantic:editAction>
 			<semantic:EditAction
 				press="onPressEditMaterial"/>
 		</semantic:editAction>
 
-		<semantic:saveAsTileAction>
+		<!--<semantic:saveAsTileAction>
 			<Button
 				press="onPressSaveMaterial"
 				icon="{i18n>iSave}"
@@ -116,8 +116,8 @@
 										forceSelection="false"
 										width="20em"
 										selectedKey="{GroupID}"
-										/>
-										<!-- items="{
+										
+										items="{
 											path: '/zjblessons_base_Groups',
 											sorter:{
 												path: 'GroupText',
@@ -128,13 +128,13 @@
 												operator: 'NE',
 												value1: null
 											}]
-										}"
+										}">
 
 										<core:Item 
 											key="{GroupID}"
 											text="{GroupText}"/>
 
-									</Select> -->
+									</Select>
 
 								</InputListItem>
 
@@ -147,9 +147,9 @@
 										forceSelection="false"
 										width="20em"
 										selectedKey="{SubGroupID}"
-										/>
+									
 										
-										<!-- items="{
+										items="{
 											path: '/zjblessons_base_SubGroups',
 											sorter:{
 												path: 'SubGroupText',
@@ -160,13 +160,13 @@
 												operator: 'NE',
 												value1: null
 											}]
-										}"
+										}">
 
 										<core:Item 
 											key="{SubGroupID}"
 											text="{SubGroupText}"/>
 
-									</Select> -->
+									</Select>
 
 								</InputListItem>
 
