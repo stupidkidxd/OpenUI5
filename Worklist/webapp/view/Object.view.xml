@@ -43,7 +43,7 @@
 
 								<InputListItem
 								label="{i18n>labelEnableChanging}">
-								<Switch state="{objectView>/editMode}"></Switch>
+								<Switch state="{objectView>/editMode}" id="switchID" ></Switch>
 								</InputListItem>
 
 								<InputListItem label="{i18n>lTableNameColumnTitle}" visible="{= !${objectView>/editMode}}">

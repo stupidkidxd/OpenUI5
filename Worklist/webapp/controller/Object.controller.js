@@ -48,6 +48,10 @@ sap.ui.define([
 					oViewModel.setProperty("/delay", iOriginalBusyDelay);
 				}
 			);
+
+			var oSwitch = this.getView().byId("switchID");
+
+  			oSwitch.attachChange(this.onChange, this);
 		},
 
 		onNavBack : function() {
@@ -259,7 +263,30 @@ sap.ui.define([
 				oIconTabFilter.removeAllContent();
 				oIconTabFilter.insertContent(oContent, 0);
 			});
-		}
+		},
+
+
+		onChange: function (oEvent) {
+			var bEditMode = oEvent.getParameter("state");
+			var oModel = this.getView().getModel();
+		  
+			if (oModel.hasPendingChanges()) {
+			  sap.m.MessageBox.confirm("Есть несохраненные изменения. Вы хотите сохранить их?", {
+				onClose: function (oAction) {
+				  if (oAction === sap.m.MessageBox.Action.OK) {
+					this.onPressSaveMaterial();
+				  } else {
+					this.onPressCancelMaterial();
+				  }
+				}.bind(this)
+			  });
+			} else {
+			  this._setEditMode(bEditMode);
+			}
+		  },
+		  
+		
+		
 	});
 
 }
